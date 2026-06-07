@@ -1,15 +1,9 @@
 import UpTriangle from "../constants/svgs/uptriangle";
+import type { TFeedbackItems } from "../lib/type";
 
-type FeedbackItems = {
-     upvoteCount: number,
-     badgeLetter: string,
-     company:string,
-     text:string,
-     daysAgo:number
-}
 
 type FeedbackItemProps = {
-   feedbackItems: FeedbackItems
+   feedbackItems: TFeedbackItems
 }
 
 export default function FeedbackItem({feedbackItems}:FeedbackItemProps) {
