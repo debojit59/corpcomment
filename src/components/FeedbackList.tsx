@@ -26,8 +26,17 @@ import FeedbackItem from "./FeedbackItem"
 // }]
 
 
+type FeedbackData = {
+  id: number
+  upvoteCount: number
+  badgeLetter: string
+  company: string
+  text: string
+  daysAgo: number
+}
+
 export default function FeedbackList() {
-  const [feedbackData , setFeedBackData] = useState([]);
+  const [feedbackData, setFeedBackData] = useState<FeedbackData[]>([]);
 
   useEffect(function(){
     async function FetchData(){
@@ -37,7 +46,7 @@ export default function FeedbackList() {
       setFeedBackData(data.feedbacks)
     }
     FetchData()
-  },[])
+  },[feedbackData])
 
   return (
 <ol className="feedback-list">
