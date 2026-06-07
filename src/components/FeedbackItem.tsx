@@ -1,21 +1,30 @@
 import UpTriangle from "../constants/svgs/uptriangle";
 
-export default function FeedbackItem() {
+type feedbackItemsprops = {
+    id:number,
+    upvoteCount: number,
+    badgeLetter: string,
+    company:string,
+    text:string,
+    daysAgo:number
+}
+
+export default function FeedbackItem({feedbackItems}:feedbackItemsprops) {
   return (
   <li className="feedback">
     <button>
       <UpTriangle/>
-      <span>593</span>
+      <span>{feedbackItems.upvoteCount}</span>
 
     </button>
     <div>
-      <p>B</p>
+      <p>{feedbackItems.badgeLetter}</p>
     </div>
     <div>
-      <p>ByteGrade</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi hic saepe, sed aliquid molestias impedit!</p>
+      <p>{feedbackItems.company}</p>
+      <p>{feedbackItems.text}</p>
     </div>
-    <p>4d</p>
+    <p>{feedbackItems.daysAgo}d</p>
 
   </li>
 
