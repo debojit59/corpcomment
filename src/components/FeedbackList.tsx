@@ -33,6 +33,21 @@ export default function FeedbackList() {
   const [isLoading,setIsLoading]=useState<boolean>(false)
   const [error,setError] = useState<string>("")
 
+
+  const handleAddToList =(text) =>{
+    const companyName = text.split(" ").find((word:string)=>word.includes("#"))!.substring(1); 
+
+    const newItem :TFeedbackItems ={
+      text:text,
+      id: new Date().getTime(), 
+      upvoteCount:0,
+      daysAgo:0,
+      company: companyName,
+      badgeLetter: companyName.substring(0,1).toUpperCase()
+    }
+    setFeedBackData((prev)=>[...prev,newItem])
+  }
+
   useEffect(function(){
     async function FetchData(){
       try {
