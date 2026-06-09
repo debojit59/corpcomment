@@ -1,6 +1,10 @@
 import { useState } from "react"
 
-export default function FeedbackForm() {
+type handleAddToListProps ={
+  handleAddToList:(text:string)=> void;
+}
+
+export default function FeedbackForm({handleAddToList}:handleAddToListProps) {
 
   const [text,setText] = useState('');
 
@@ -11,8 +15,15 @@ export default function FeedbackForm() {
   const MaxLength = 150
   const CharLength = MaxLength- text.length ;
 
+  const HandleSubmit =(e:React.SubmitEvent<HTMLFormElement>)=> {
+    e.preventDefault()
+    handleAddToList(text)
+    setText("")
+
+  }
+
   return (
-    <form className="form">
+    <form onSubmit={HandleSubmit} className="form">
       <textarea id="feedback-form" placeholder="bla bla" 
       value ={text}
       onChange={HandleValueChange}

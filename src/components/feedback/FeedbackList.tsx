@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
 import FeedbackItem from "./FeedbackItem"
-import Spinner from "./Spinner"
-import ErrorMessage from "./ErrorMessage"
-import type { TFeedbackItems } from "../lib/type"
+import Spinner from "../Spinner"
+import ErrorMessage from "../ErrorMessage"
+import type { TFeedbackItems } from "../../lib/type"
 
 // const feedbackArray =[{
 //   upvoteCount : 593,
@@ -27,33 +26,15 @@ import type { TFeedbackItems } from "../lib/type"
 
 // }]
 
+type feedbackListProps = {
+  feedbackData:TFeedbackItems[],
+  isLoading:boolean,
+  error:string,
 
-export default function FeedbackList() {
-  const [feedbackData, setFeedBackData] = useState<TFeedbackItems[]>([]);
-  const [isLoading,setIsLoading]=useState<boolean>(false)
-  const [error,setError] = useState<string>("")
+}
 
-  useEffect(function(){
-    async function FetchData(){
-      try {
-        setIsLoading(true)
-        setError("")
-        const res = await fetch("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks")
-        if (!res.ok) {
-          throw new Error("something went wrong man");
-        }
-        const data = await res.json()
-        console.log(data)
-        setFeedBackData(data.feedbacks)
-      }
-      catch (err) {
-        setError("Something wrong happened")
-      }
-      setIsLoading(false)
-    }
-
-    FetchData()
-  },[])
+export default function FeedbackList({feedbackData,isLoading,error}:feedbackListProps) {
+  
 
   return (
 <ol className="feedback-list">
