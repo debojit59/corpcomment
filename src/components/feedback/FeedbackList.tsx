@@ -1,7 +1,7 @@
 import FeedbackItem from "./FeedbackItem"
-import Spinner from "./Spinner"
-import ErrorMessage from "./ErrorMessage"
-import type { TFeedbackItems } from "../lib/type"
+import Spinner from "../Spinner"
+import ErrorMessage from "../ErrorMessage"
+import type { TFeedbackItems } from "../../lib/type"
 
 // const feedbackArray =[{
 //   upvoteCount : 593,

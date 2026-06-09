@@ -1,5 +1,5 @@
-import UpTriangle from "../constants/svgs/uptriangle";
-import type { TFeedbackItems } from "../lib/type";
+import UpTriangle from "../../constants/svgs/uptriangle";
+import type { TFeedbackItems } from "../../lib/type";
 
 
 type FeedbackItemProps = {
@@ -21,7 +21,7 @@ export default function FeedbackItem({feedbackItems}:FeedbackItemProps) {
       <p>{feedbackItems.company}</p>
       <p>{feedbackItems.text}</p>
     </div>
-    <p>{feedbackItems.daysAgo}d</p>
+    <p>{feedbackItems.daysAgo===0? `new` : `${feedbackItems.daysAgo}d`}</p>
 
   </li>
 

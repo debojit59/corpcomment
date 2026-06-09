@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Container from "./components/Container"
-import Footer from "./components/Footer"
+import Container from "./components/layout/Container"
+import Footer from "./components/layout/Footer"
 import HastagList from "./components/HastagList"
 import type { TFeedbackItems } from "./lib/type";
 
@@ -15,18 +15,30 @@ function App() {
   const [error,setError] = useState<string>("")
 
 
-  const handleAddToList =(text:string) =>{
-    const companyName = text.split(" ").find((word:string)=>word.includes("#"))!.substring(1); 
+  async function postFeedback(newItem: TFeedbackItems) {
+    await fetch("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks", {
+      method: "POST",
+      body: JSON.stringify(newItem),
+      headers: {
+        Accept: `application/json`,
+        "Content-Type": `application/json`
+      }
+    })
+  }
 
-    const newItem :TFeedbackItems ={
-      text:text,
-      id: new Date().getTime(), 
-      upvoteCount:0,
-      daysAgo:0,
+  const handleAddToList = async (text: string) => {
+    const companyName = text.split(" ").find((word: string) => word.includes("#"))!.substring(1);
+
+    const newItem: TFeedbackItems = {
+      text: text,
+      id: new Date().getTime(),
+      upvoteCount: 0,
+      daysAgo: 0,
       company: companyName,
-      badgeLetter: companyName.substring(0,1).toUpperCase()
+      badgeLetter: companyName.substring(0, 1).toUpperCase()
     }
-    setFeedBackData((prev)=>[...prev,newItem])
+    setFeedBackData((prev) => [...prev, newItem])
+    await postFeedback(newItem)
   }
 
   useEffect(function(){
