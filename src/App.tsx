@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Container from "./components/layout/Container"
 import Footer from "./components/layout/Footer"
-import HastagList from "./components/HastagList"
+import HastagList from "./components/hashtag/HastagList"
 import type { TFeedbackItems } from "./lib/type";
 
 
@@ -13,7 +13,20 @@ function App() {
   const [feedbackData, setFeedBackData] = useState<TFeedbackItems[]>([]);
   const [isLoading,setIsLoading]=useState<boolean>(false)
   const [error,setError] = useState<string>("")
+  const[selectedComapany,setSelectedCompany] = useState("")
 
+  const companyList = feedbackData.reduce<string[]>((acc,item)=>{
+    if(!acc.includes(item.company)){
+      acc.push(item.company)
+    }
+    return acc
+  },[])
+
+  const filteredFeedbackData = selectedComapany? feedbackData.filter((item)=>item.company===selectedComapany):feedbackData;
+
+  const handleSelectedCompany = (company :string)=>{
+    setSelectedCompany(company)
+  }  
 
   async function postFeedback(newItem: TFeedbackItems) {
     await fetch("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks", {
@@ -66,8 +79,8 @@ function App() {
   return (
    <div className="app">
     <Footer/>
-    <Container feedbackData={feedbackData} isLoading={isLoading} error={error} handleAddToList={handleAddToList}/>
-    <HastagList/>
+    <Container feedbackData={filteredFeedbackData} isLoading={isLoading} error={error} handleAddToList={handleAddToList}/>
+    <HastagList companyList={companyList} onSelectCompany ={handleSelectedCompany}/>
    </div>
 
 
