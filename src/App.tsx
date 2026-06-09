@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Container from "./components/layout/Container"
 import Footer from "./components/layout/Footer"
 import HastagList from "./components/hashtag/HastagList"
@@ -15,14 +15,16 @@ function App() {
   const [error,setError] = useState<string>("")
   const[selectedComapany,setSelectedCompany] = useState("")
 
-  const companyList = feedbackData.reduce<string[]>((acc,item)=>{
+  const companyList = useMemo(()=>(feedbackData.reduce<string[]>((acc,item)=>{
     if(!acc.includes(item.company)){
       acc.push(item.company)
     }
     return acc
-  },[])
+  },[])),[feedbackData])
 
-  const filteredFeedbackData = selectedComapany? feedbackData.filter((item)=>item.company===selectedComapany):feedbackData;
+  const filteredFeedbackData = useMemo(()=>(
+    selectedComapany? feedbackData.filter((item)=>item.company===selectedComapany):feedbackData
+  ),[selectedComapany,feedbackData])
 
   const handleSelectedCompany = (company :string)=>{
     setSelectedCompany(company)

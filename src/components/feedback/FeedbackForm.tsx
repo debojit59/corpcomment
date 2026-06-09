@@ -7,6 +7,9 @@ type handleAddToListProps ={
 export default function FeedbackForm({handleAddToList}:handleAddToListProps) {
 
   const [text,setText] = useState('');
+  const [showValidIndicator , setShowValidIndicator]=useState(false)
+  const [showinvalidIndicator,setShowInvalidIndicator]=useState(false)
+
 
 
   const HandleValueChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -17,13 +20,31 @@ export default function FeedbackForm({handleAddToList}:handleAddToListProps) {
 
   const HandleSubmit =(e:React.SubmitEvent<HTMLFormElement>)=> {
     e.preventDefault()
+
+    if(text.length>0 && text.includes("#")){
+      setShowValidIndicator(true)
+      setTimeout(() => {
+        setShowValidIndicator(false)
+        
+      }, 500);
+    }
+    else {
+      setShowInvalidIndicator(true)
+      setTimeout(() => {
+        setShowInvalidIndicator(false)
+        
+      }, 500);
+    }
+
     handleAddToList(text)
     setText("")
 
   }
 
   return (
-    <form onSubmit={HandleSubmit} className="form">
+    <form onSubmit={HandleSubmit} className={`form ${
+      showinvalidIndicator? "form--invalid":""
+    } ${showValidIndicator?"form--valid": ""}`}>
       <textarea id="feedback-form" placeholder="bla bla" 
       value ={text}
       onChange={HandleValueChange}
